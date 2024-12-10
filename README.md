@@ -1,1 +1,2 @@
-# Twitter-sentiment-analysis-ML
+This project focuses on leveraging machine learning and NLP to build a sentiment analysis system for classifying tweets into positive, neutral, or negative categories. Traditional models like Decision Tree, Random Forest, and Naive Bayes were compared to the transformer-based RoBERTa model. RoBERTa, fine-tuned for this task, emerged as the most accurate and contextually robust solution. The model was optimized through hyperparameter tuning and deployed using a Gradio interface for real-time sentiment prediction. This scalable solution demonstrates the effectiveness of advanced models in social media analysis.
+
