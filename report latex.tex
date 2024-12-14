@@ -1,0 +1,1025 @@
+
+\documentclass[journal]{IEEEtran}
+
+% *** CITATION PACKAGES ***
+\usepackage[style=ieee]{biblatex}   %your file created using JabRef
+
+
+% *** MATH PACKAGES ***
+\usepackage{amsmath}
+\usepackage{parskip} % Automatically adds space between paragraphs
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+\usepackage{url}
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+\usepackage{graphicx}  %needed to include png, eps figures
+\usepackage{float}  % used to fix location of images i.e.\begin{figure}[H]
+\usepackage{titlesec}
+\usepackage{hyperref}
+\titleformat{\section} % Redefine the section title format
+  {\bfseries\fontsize{13}{15}\selectfont} % Bold and one size larger than default
+  {\thesection} % Section numbering
+  {1em} % Spacing between number and title
+  {} % Title style
+% Redefine the subsection format
+\titleformat{\subsection}
+  {\bfseries\normalsize} % Bold and normal size for subsections
+  {\thesubsection}       % Use "1.1, 1.2" format for numbering
+  {1em}                  % Spacing between number and title
+  {}                     % Title style
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesection{\arabic{section}}
+
+\begin{document}
+
+% paper title
+\title{Twitter Sentiment Prediction\\
+\large San Jose State University}
+
+% author names 
+\author{
+Hamsalakshmi Ramachandran, 017423666,\\
+Himani Shah, 017411407,\\
+Soumya Challuru Sreenivas, 017518618,\\
+Sugandha Chauhan, 017506190
+}
+       
+% The report headers
+\markboth{Machine Learning Report, 2024 }%do not delete next lines
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
+
+% make the title area
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+\section{ INTRODUCTION}
+
+\subsection{ \textbf{Project Background and Execute Summary}}
+Twitter is a well-known social networking site where users can post brief messages called tweets. It acts as a central location for conversations, trends, and real-time updates on a range of subjects, such as news, entertainment, and individual viewpoints. With more than 450 million users worldwide, Twitter has developed into a useful resource for understanding public opinion and is therefore an essential tool for companies, researchers, and organizations looking to comprehend and interact with their target audiences. However, there are drawbacks to its broad use as well, like hate speech and false information, which emphasizes the necessity of sentiment analysis technologies and efficient content regulation.
+
+Sentiment analysis automates text classification as positive, negative, or neutral, aiding companies in understanding customer opinions, managing brand reputation, and mitigating potential PR issues. To address the misuse of social media platforms, such as Twitter, for spreading hateful content and misinformation, an NLP-based classifier model is developed to identify and flag negative tweets. The project involves data preprocessing, exploratory data analysis (EDA), and model training for sentiment classification. The expected contribution is an automated solution for monitoring sentiment on social media.
+\subsection{\textbf{Project Requirements}}
+The project requirements focus on both functional and AI-powered aspects to ensure effective sentiment analysis of Twitter data. Functionally, the system must preprocess raw Twitter data by cleaning, tokenizing, and handling missing values. It should classify tweets into positive, neutral, and negative sentiments and deploy a real-time prediction interface using Gradio, ensuring measurable outputs like accuracy, precision, recall, and F1-score. On the AI-powered side, the workflow involves preprocessing raw tweets, preparing data by splitting it into training, validation, and test sets, and training models like Naive Bayes, Decision Tree, Random Forest, and RoBERTa. The best-performing model will be selected using metrics such as accuracy and confusion matrices, with deployment offering real-time sentiment predictions through an interactive interface. The dataset includes labeled tweets and must undergo preprocessing to address missing data and ensure diversity, leveraging tools like NLTK and Hugging Face for text preparation. This streamlined pipeline enables accurate and efficient sentiment classification.
+
+\subsection{Project Deliverables}
+\begin{tabular}{|p{2cm}|p{2cm}|p{3cm}|}
+\hline
+\textbf{Deliverable} & \textbf{Category} & \textbf{Description} \\ 
+\hline
+Project Proposal & Report & Overview of project goals, dataset details, and a literature review. \\ 
+\hline
+Data Engineering Plan & Report & Detailed preprocessing steps, including text cleaning and feature extraction. \\ 
+\hline
+Model Evaluation Report & Report & Comprehensive evaluation of models using metrics like accuracy, precision, recall, and F1-score. \\ 
+\hline
+Interactive Dashboard & Prototype & Gradio-powered sentiment analysis dashboard for user input and predictions. \\ 
+\hline
+Machine Learning Models & Development Application & Trained models saved for deployment, covering multiple algorithms. \\ 
+\hline
+Deployment Application & Production Application & Gradio-powered web app for real-time tweet sentiment analysis. \\ 
+\hline
+Group Project Report & Report & Consolidated report summarizing all aspects of the project, including results. \\ 
+\hline
+\end{tabular}
+
+\subsection{Technology and Solution Survey}
+The survey of current technologies and solutions highlights the application of various machine learning algorithms and frameworks for sentiment analysis on Twitter data. By leveraging insights from both literature and project experiments, models such as Naive Bayes, Decision Tree, Random Forest, and RoBERTa were evaluated for their performance in terms of accuracy, efficiency, and usability. These models were analyzed in the context of their strengths and limitations, providing a comprehensive understanding of their suitability for the project.
+
+In the experiments conducted during the project, Naive Bayes achieved moderate accuracy (\textasciitilde62\%). From the literature, Kumar et al. emphasized its computational efficiency and utility as a baseline model for sentiment classification. However, it assumes independence between features, which limits its ability to handle nuanced contextual relationships in text data. Similarly, Decision Tree demonstrated moderate accuracy (\textasciitilde58\%) but was prone to overfitting, which hindered its generalization to new data. As noted by Kharde et al., Decision Trees are interpretable and easy to use but struggle with unbalanced datasets and complex data structures. Random Forest, another traditional machine learning model, provided insights into feature importance but struggled with accuracy (\textasciitilde62\%) in project experiments due to overfitting. Its computational intensity and tendency to overfit remain key challenges.
+
+The advanced transformer-based model, RoBERTa, emerged as the best-performing solution in project experiments, achieving 74\% accuracy and demonstrating well-balanced precision, recall, and F1-scores. Literature by Wang et al. and Kumar et al. reinforces the effectiveness of transformer-based models like RoBERTa, which excel in understanding the contextual and semantic nuances of text. Despite its computational cost, RoBERTa's ability to handle complex contextual data makes it an optimal choice for sentiment classification tasks.
+
+For deployment, Gradio was used to create a user-friendly, interactive interface for real-time sentiment prediction. Gradio has gained widespread recognition for its accessibility and ease of integration with machine learning models, making it a practical choice for deployment.
+
+Overall, the findings from literature and project experiments highlight the strengths and limitations of various technologies.
+
+\subsection{Literature Survey of Existing Research}
+\begin{itemize}
+     
+
+\item\href{https://www.cs.columbia.edu/~julia/papers/Agarwaletal11.pdf}{[1]} Twitter data analysis has been a trending research area for understanding people’s opinions. Agarwal and others in 2011 proposed new ways to classify tweets by using specific features of the language, like parts of speech, as positive, negative, or neutral. The study experiment with several methods like uni-gram, bi-gram model and demonstrate how addition of linguistic features can enhance accuracy. The research has helped in the tackling of challenges, like informal tweet language. 
+
+\item\href{https://arxiv.org/pdf/1601.06971}{[2]} Kharde and Sonawane (2016) gave an overview of the available methods for analyzing sentiments on Twitter. They illustrated how the challenges presented by short forms, abbreviations, and emojis make the task difficult while also showing how such an analysis can be useful in marketing and gauging public opinion. The authors of (2017) grouped techniques made use of supervised learning, unsupervised learning, and highlighted the necessity of mixing methods. Moreover, cleaning and preparing the data - breaking text up into words, and even simplifying it - are vital for success.
+
+\item\href{https://ieeexplore.ieee.org/document/9154143}{[3]} Kariya and Khodke (2020) developed methods for the tweet classification into positive, negative or neutral. They discussed how businesses can conduct this type of analysis to understand customer feedback or trends on social media. They illustrated how model like Naïve Bayes and Support Vector Machines can effectively classify tweets. They said that the use of graphs and charts is beneficial. To help people understand and use the results. 
+
+\item\href{https://www.researchgate.net/publication/365618365_Sentiment_Analysis_of_Twitter_Data/fulltext/637b777754eb5f547cf040b8/Sentiment-Analysis-of-Twitter-Data.pdf}{[4]} Wang et al. (2022) explored different techniques for analyzing sentiments in tweets. They emphasized the importance of preparing the data and picking the right features to improve results. They experimented with advanced methods like deep learning models (LSTM and CNN) to understand the context and meaning of words better. By using word embeddings, they showed how these techniques can make the analysis more accurate and meaningful.
+\item\href{https://journalofbigdata.springeropen.com/articles/10.1186/s40537-022-00633-z}{[5]} Ali et al. (2022) studied tweets from the 2020 US presidential election to analyze public sentiments during a major event. They showed how tracking sentiments over time can reveal shifts in public opinion. Their work also demonstrated how this kind of analysis can help understand voter behavior and even inform campaign strategies.
+
+\end{itemize}
+
+\includegraphics[width=0.50\textwidth]{t1.png}
+\section{Data and Project Management Plan}
+
+
+
+\subsection{\textbf{Data Management Plan}}
+The following data management plan (DMP) describes how we handled our project life cycle. 
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{2cm}|p{4cm}|}
+\hline
+\textbf{Aspect} & \textbf{Description} \\ 
+\hline
+Data Collection & We have downloaded the Twitter dataset from Kaggle. \\ 
+\hline
+Data Storage & We have used Google Drive as primary storage for all our datasets and all the necessary files required throughout the project, like .pkl files. \\ 
+\hline
+Data Access and Sharing & Our team shared a Google Drive folder access to organize all our files. \\ 
+\hline
+Data Processing and Manipulation & All the data transformation is done on Google Colab, using the Google Drive API to mount the folder and access the data files. \\ 
+\hline
+\end{tabular}
+\caption{Data Management Overview}
+\label{table:data_management}
+\end{table}
+\subsection{\textbf{Project Development Methodology}}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 011620.png}
+\caption{Project methodology }
+\end{figure}
+\begin{itemize}
+    \item \textbf{Data Acquisition:} Determining the dataset.
+    \item \textbf{EDA}: Understanding features of dataset.
+    \item \textbf{Preprocessing}: Data transformation, normalization, and cleaning.
+    \item \textbf{Model Selection}: Examining methods like Decision Trees, Random Forest and Naive bayes and RoBERTa.
+    \item \textbf{Evaluation}: Models are compared using metrics such as F1-score and accuracy.
+    \item \textbf{Deployment}: Creating a real-time traffic classification prototype.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.48\textwidth]{crisp.jpg}
+\caption{Crisp DM Methodology }
+\end{figure}
+
+\textbf{
+\subsection{\textbf{Project Organization Plan}}
+}
+
+This project adopts an organized approach by breaking down the work into smaller, manageable tasks that align with the CRISP-DM methodology. This ensures efficient handling of deliverables through clear task allocation and progress tracking. The following outlines the key phases and responsibilities in the project:
+
+The business understanding phase involves defining the project's goals, motivation, and objectives through a thorough literature review and technological survey. This step helps frame the problem statement and outline the approach for achieving the desired outcomes.
+
+The data understanding phase focuses on acquiring the Twitter dataset from relevant sources, followed by analyzing its structure, quality, and trends. Exploratory Data Analysis (EDA) is performed to uncover patterns and relationships between features in the data.
+
+In the data preparation phase, preprocessing techniques like text cleaning, tokenization, stemming, and feature engineering are applied to prepare the data for model building. The data is split into training and testing subsets, ensuring compatibility with machine learning algorithms.
+
+The modeling phase involves training machine learning models such as Naive bayes, Decision Tree, Random Forest, and RoBERTa using the processed data. Each model's performance is analyzed to identify the most effective solution.
+The evaluation phase compares the models using performance metrics like accuracy, precision, recall, F1-score, and confusion matrices. The best-performing model is selected based on its ability to classify sentiments accurately.
+Finally, the deployment and presentation phase includes developing an interactive Gradio-based application for real-time sentiment predictions. Additionally, a detailed project report and presentation are prepared, summarizing all aspects of the project from data preprocessing to model deployment.
+
+The collaborative effort of the team in each phase ensured the successful execution of the project. This was achieved through a highly interactive and coordinated approach, where all team members adopted a paired programming methodology. Each phase of the project was carried out with the entire team actively monitoring and contributing to the process via Zoom meetings and shared Google Docs.
+This approach allowed team members to review and validate each other’s work in real-time, fostering a collaborative environment that encouraged knowledge sharing and immediate feedback. 
+
+
+\subsection{\textbf{Project Resource Requirements and Plan}}
+\textbf{Hardware}: 
+
+\begin{itemize}
+    \item A powerful laptop or PC with a GPU and 16GB or more of RAM for training models.
+\end{itemize}
+
+\textbf{Tools and Software:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{2cm}|p{5cm}|}
+\hline
+\textbf{Category} & \textbf{Tools/Technologies} \\ 
+\hline
+Data Manipulation and Analysis & pandas, numpy \\ 
+\hline
+Visualization & matplotlib.pyplot, seaborn, wordcloud \\ 
+\hline
+Text Preprocessing & nltk (word\_tokenize, stopwords, WordNetLemmatizer, PorterStemmer), re, string, contractions \\ 
+\hline
+Machine Learning & sklearn (TfidfVectorizer, LabelEncoder, train\_test\_split, RandomForestClassifier, DecisionTreeClassifier, LogisticRegression, MultinomialNB, accuracy\_score, classification\_report, ConfusionMatrixDisplay) \\ 
+\hline
+Deep Learning & transformers (AutoTokenizer, AutoModelForSequenceClassification, AdamW), torch, torch.utils.data \\ 
+\hline
+Utility and Performance Monitoring & tqdm, warnings, multiprocessing.Pool \\ 
+\hline
+Additional Tools & Google Drive, Google Docs, Google Colab/Kaggle Kernels, GitHub, Zoom Meetings \\ 
+\hline
+Computing Resources & Local Machine Hardware, Cloud Services (Google Colab or Kaggle Kernels) \\ 
+\hline
+\end{tabular}
+\caption{Tools and Technologies Used}
+\label{table:tools_technologies}
+\end{table}
+
+\subsection{\textbf{Project Schedule}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{gantt.jpg}
+\caption{Ghantt Chart }
+\end{figure}
+
+\textbf{1.  Introduction}: The project begins with this foundational task, which includes defining objectives and requirements. This task is crucial to set the stage for the subsequent phases.
+
+\textbf{2.  Data and Project Management Plan}: This task follows the "Introduction" phase and builds on its outputs. It involves organizing data collection, resource planning, and scheduling.
+
+
+\textbf{3.  Data Engineering}: Dependent on the completion of the "Data and Project Management Plan," this task focuses on implementing the planned strategies, including data preprocessing and preparation.
+
+\textbf{4.  Model Development}: This phase sequentially follows "Project Launch and Execution" and involves developing and training machine learning models for sentiment analysis.
+
+
+\textbf{5.  Data Analytics and Intelligence System}: Parallel to "Model Development," this phase focuses on analyzing model outputs and integrating intelligence into the system, both emerging as outcomes of the execution phase.
+
+\textbf{6.  System Evaluation and Visualization}:  Dependent on the completion of both "Model Development" and "Data Analytics," this task involves evaluating model performance, interpreting results, and creating visualizations.
+
+
+\textbf{7.  Conclusion}: The final task, dependent on "System Evaluation and Visualization," encompasses summarizing insights, presenting findings, and discussing the project's overall impact and lessons learned.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{pert.jpg}
+\caption{Pert Chart }
+\end{figure}
+
+\section{Data Engineering}
+\subsection{\textbf{Data Process}}
+To ensure the dataset is effectively prepared for training and evaluating machine learning models, the data process for this project follows a structured approach. Using the Kaggle Twitter Sentiment dataset consisting of approximately 27,000 rows, the raw data is divided into training, validation, and test datasets, adhering to standard practices. The steps involved are as follows:
+
+\subsection*{Raw Data Extraction}
+The Kaggle dataset containing tweets, sentiments (positive, negative, neutral), and relevant text features was loaded into the environment.
+
+\subsection*{Dataset Division}
+\begin{itemize}
+    \item \textbf{Training Set (80\%):} Approximately 21,600 rows were used to train the machine learning models, ensuring sufficient data for learning patterns effectively.
+    \item \textbf{Validation Set (10\%):} Around 2,700 rows were allocated for hyperparameter tuning and optimization, ensuring the model generalizes well to unseen data.
+    \item \textbf{Test Set (10\%):} The remaining 2,700 rows were used for final evaluation, providing an unbiased assessment of model performance.
+\end{itemize}
+
+\subsection*{Preprocessing}
+\begin{itemize}
+    \item \textbf{Text Cleaning:} Steps included handling missing values, removing duplicates, replacing special characters, and converting text to lowercase.
+    \item \textbf{Tokenization:} Breaking down sentences into words for analysis.
+    \item \textbf{Stopword Removal:} Common words with no significant contribution to sentiment were removed.
+    \item \textbf{Lemmatization:} Reduced words to their base forms for consistency.
+\end{itemize}
+
+\subsection*{Feature Engineering}
+Constructed features such as sentiment labels and word frequency metrics to enhance model learning.
+
+\subsection{\textbf{Data Collection}}
+
+The raw dataset collected from Kaggle contained over 27,000 data points and consisted of the following columns: \texttt{textID} (unique identifier for each text), \texttt{text} (actual tweet text), \texttt{sentiment} (general sentiment: positive, neutral, or negative), and \texttt{selected\_text} (text segment used to determine sentiment). The dataset was analyzed for completeness and uniqueness. Missing values were handled by dropping rows with null entries, ensuring data integrity. Additionally, no duplicates were identified in the dataset.
+
+\subsection*{Data Retrieval}
+\begin{itemize}
+    \item The dataset was downloaded as a CSV file and imported into the working environment using Python's \texttt{pandas} library.
+    \item Initial data exploration and checks for completeness were performed to ensure no missing or corrupted entries.
+\end{itemize}
+
+\subsection*{Sample Data}
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|c|p{2cm}|p{2.5cm}|c|}
+\hline
+\textbf{textID} & \textbf{text} & \textbf{selected\_text} & \textbf{sentiment} \\ \hline
+2339a9b08b & as much as i love to be hopeful, i reckon the chances are minimal =P i`m never gonna get my cake and stuff & as much as i love to be hopeful, i reckon the chances are minimal =P i`m never gonna get my cake and stuff & neutral \\ \hline
+16fab9f95b & I really really like the song Love Story by Taylor Swift & like & positive \\ \hline
+74a76f6e0a & My Sharpie is running DANGERously low on ink & DANGERously & negative \\ \hline
+04dd1d2e34 & i want to go to music tonight but i lost my voice. & lost & negative \\ \hline
+
+\end{tabular}
+\label{tab:sample_data}
+\caption{Sample Data from the Dataset}
+\end{table}
+        
+\subsection{\textbf{Data Pre-processing}}
+The preprocessing phase involved cleaning the raw tweet data to ensure uniformity and relevance for sentiment prediction. The steps included:
+\begin{itemize}
+    \item Replacing backticks (\texttt{`}) with apostrophes to standardize text.
+    \item Expanding contractions like \textit{"couldn't"} to \textit{"could not"} for better context representation.
+    \item Removing HTML tags, URLs, digits, and special characters to retain meaningful text.
+    \item Converting all text to lowercase for consistency.
+    \item Tokenizing the text into individual words to facilitate further processing.
+    \item Removing stopwords, such as \textit{"is," "and,"} and \textit{"the,"} to focus on significant terms.
+    \item Performing lemmatization to reduce words to their root forms (e.g., \textit{"running"} to \textit{"run"}).
+\end{itemize}
+
+The cleaned data was transformed into a new column called \texttt{cleaned\_text}, which was used for downstream tasks. This transformation ensured that the data format aligned with the requirements of the machine learning models.
+
+\subsection{\textbf{Data Transformation}}
+The cleaned data was transformed into a new column called \texttt{cleaned\_text}, which was used for downstream tasks. This transformation ensured that the data format aligned with the requirements of the machine learning models.
+
+\subsection{\textbf{Data Preparation}}
+The \texttt{cleaned\_text} column was split into training, validation, and test datasets. These subsets were carefully partitioned to ensure unbiased model evaluation. This prepared data was ready for feature extraction and machine learning pipelines. 
+
+\subsection{\textbf{Data Statistics}}
+We were progressively analyzing the raw, pre-processed, transformed, and prepared datasets. The Raw dataset analysis included checking for missing values and overall feature distribution.Exploratory Data Analysis (EDA) revealed that most tweets had lengths between 20 and 80 characters, with neutral sentiments dominating. Understanding the distribution of tweet lengths and sentiment classes was crucial for selecting appropriate machine learning models. 
+
+\subsection{\textbf{Data Analytics Results}}
+Data analytics results are presented through word clouds and bar charts for sentiment distributions, showing the most frequent words in positive, negative, and neutral sentiments. These visualizations enable deeper understanding and identification of patterns within the dataset.
+
+More on this covered in Section 5.3.
+
+\section{\textbf{Model Development}}
+
+\subsection{\textbf{Model Proposals}}
+For this study, we proposed a combination of traditional machine learning classifiers and an advanced transformer based model to perform sentiment classification on Twitter data. The traditional models included Decision Tree Classifier, Random Forest Classifier, and Naive Bayes Classifier, selected for their interpretability, simplicity, and established efficiency in text classification tasks. These models utilized TF-IDF (Term Frequency-Inverse Document Frequency) vectorization to convert text data into numerical representations, enabling effective handling of high-dimensional sparse features. To address the limitations of traditional models in capturing contextual information, we incorporated the RoBERTa (Robustly Optimized BERT Pretraining Approach) model, a stateof-the-art transformer-based architecture. RoBERTa has been extensively pre-trained on large text corpora and fine-tuned in this study for the sentiment classification task, leveraging its ability to capture semantic nuances, word-order relationships, and complex language structures. This approach ensured a comprehensive evaluation of traditional methods versus modern deep learning techniques. 
+
+We were able to gain a better comprehension of the sentiment expressed in brief and informal text styles by optimizing RoBERTa for Twitter data and utilizing its contextual embeddings. A thorough and comprehensive assessment was guaranteed by this hybrid technique, which combined transformer-based and traditional models and highlighted the trade-offs between interpretability, prediction accuracy, and computing economy.
+
+\subsection{\textbf{Model Supports}}
+The project was conducted on two primary hardware setups:
+
+\begin{itemize}
+    \item \textbf{Windows Laptop:}
+    \begin{itemize}
+        \item \textbf{Processor:} Intel Core i7 with 8 cores for parallel processing during model training.
+        \item \textbf{RAM:} 16GB, ensuring efficient handling of large datasets and complex computations.
+        \item \textbf{Graphics Processing Unit (GPU):} Nvidia GTX 1650 with 4GB VRAM for accelerated deep learning tasks using frameworks like Hugging Face Transformers.
+        \item \textbf{Storage:} 512GB SSD for fast data access and efficient storage management.
+    \end{itemize}
+
+    \item \textbf{MacBook Pro:}
+    \begin{itemize}
+        \item \textbf{Processor:} Apple M1 Pro chip with 8 CPU cores and 10 GPU cores.
+        \item \textbf{RAM:} 16GB unified memory, optimized for intensive machine learning computations.
+        \item \textbf{Storage:} 512GB SSD for fast read/write operations.
+        \item \textbf{Operating System:} macOS Ventura 13.0, providing a stable environment for development and model training.
+    \end{itemize}
+\end{itemize}
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{1.5cm}|p{2cm}|p{4cm}|}
+\hline
+\textbf{Software/ Library} & \textbf{Specification} & \textbf{Justification} \\ 
+\hline
+Windows OS & Operating system & Provides compatibility with tools and libraries used for the project. \\ 
+\hline
+macOS Ventura & Operating system & Stable and optimized for running machine learning and deep learning libraries. \\ 
+\hline
+Google Colab & Interactive programming environment & Allows GPU usage for deep learning models like RoBERTa. \\ 
+\hline
+Python & Programming language & Primary language for data analysis, machine learning, and deployment. \\ 
+\hline
+Hugging Face Transformers & Pre-trained models like RoBERTa & Enabled efficient fine-tuning for sentiment classification. \\ 
+\hline
+NLTK and SpaCy & Text preprocessing tools & Tokenization, stopword removal, lemmatization, and data cleaning. \\ 
+\hline
+Scikit-learn & Machine learning library & Supports traditional ML models such as Logistic Regression, Decision Tree, and Random Forest. \\ 
+\hline
+Matplotlib \& Seaborn & Visualization libraries & Used for plotting EDA charts and performance metrics. \\ 
+\hline
+Gradio & Dashboard library & Interactive interface for real-time sentiment prediction. \\ 
+\hline
+Pandas \& NumPy & Data manipulation and numerical computation tools & For efficient preprocessing, cleaning, and analysis. \\ 
+\hline
+WordCloud & Visualization tool & Generated word clouds to visualize dominant terms in sentiments. \\ 
+\hline
+\end{tabular}
+\caption{Software and Libraries Used}
+\label{table:software_libraries}
+\end{table}
+
+This dual-platform approach, leveraging both macOS and Windows, enabled greater flexibility and performance. While macOS provided seamless integration with development tools, the Windows environment offered GPU acceleration for efficient training of deep learning models. The carefully chosen software and libraries complemented the hardware to streamline data processing, model training, evaluation, and deployment. 
+\subsection{\textbf{Model Comparison and Justification}}
+
+
+Naive Bayes is a simple yet effective probabilistic model for text classification tasks like sentiment analysis. It works well with features such as bag-of-words or TF-IDF, making it highly suitable for datasets like tweets. While it is prone to overfitting if irrelevant or redundant features are present, careful preprocessing (e.g., stopword removal and stemming) ensures better results. It performs efficiently on small to medium-sized datasets, which is advantageous when labeled data is limited. Furthermore, Naive Bayes provides interpretable results, as the probabilities associated with each class can easily explain the contributions of specific words to the sentiment classification.
+
+RoBERTa, a transformer-based model, stands out due to its ability to understand contextual word embeddings, which is crucial for handling the nuances in tweets, including sarcasm and informal language. Its pre-trained embeddings make it robust against noisy or irrelevant data, capturing intricate sentiment patterns effectively. Although RoBERTa requires large datasets for fine-tuning and substantial computational resources, its ability to achieve high accuracy justifies its use. Despite being a black-box model with lower interpretability, it is ideal for delivering top-tier performance in complex sentiment analysis tasks, making it a strong candidate for the project.
+
+Decision Trees are highly interpretable models that classify data by splitting features in a tree-like structure, making their decision-making processes easy to visualize. However, they are prone to overfitting, especially when the tree becomes too deep, capturing noise in the data rather than meaningful patterns. While they can efficiently handle smaller datasets, their scalability is limited for large-scale Twitter data. Additionally, Decision Trees may struggle with the unstructured nature of tweet text and often underfit if their depth or feature splits are too constrained. Nevertheless, their simplicity and interpretability make them a good starting point for understanding patterns in the dataset.
+
+Random Forest, as an ensemble model of multiple decision trees, is highly robust and effective for sentiment analysis. By averaging predictions from diverse trees, it reduces both bias and variance, making it less prone to overfitting. It handles noisy and diverse data well, which is often characteristic of Twitter datasets. Random Forest can also scale efficiently to large datasets and provides feature importance scores, helping identify which words or features contribute most to sentiment classification. While it is less interpretable than Decision Trees, its consistent performance across varied datasets makes it an excellent choice for the project.
+
+These models, each with distinct strengths and limitations, collectively offer a comprehensive toolkit for sentiment analysis on Twitter data. The choice of model depends on the specific requirements of the task, such as interpretability, computational resources, and dataset size.
+\includegraphics[width=0.48\textwidth]{t2.png}
+\subsection{\textbf{Model Evaluation Methods}}
+The models were evaluated using standard classification metrics to provide a rigorous assessment of their performance:
+
+\begin{itemize}
+    \item \textbf{Accuracy:} The proportion of correctly predicted instances out of the total samples, providing an overall performance measure.
+    \item \textbf{Precision:} The ratio of correctly predicted positive observations to the total predicted positive observations, measuring the model’s ability to minimize false positives.
+    \item \textbf{Recall:} The ratio of correctly predicted positive observations to all actual positive observations, evaluating the model’s sensitivity to relevant instances.
+    \item \textbf{F1-Score:} The harmonic mean of precision and recall, offering a balanced metric that accounts for class imbalance in the dataset.
+\end{itemize}
+
+\subsection{\textbf{Model Validation and Evaluation Results}}
+
+The experimental results for the four selected models are summarized below:
+
+\begin{itemize}
+    \item \textbf{Decision Tree Classifier:} Achieved a training accuracy of 64.84\% and a test accuracy of 58.15\%. The model exhibited moderate performance across sentiment classes, with relatively higher recall for the \textit{“negative”} sentiment (0.74) but weaker results for the \textit{“neutral”} sentiment (0.47). This highlights its role as a baseline model for this task.
+    
+    \item \textbf{Random Forest Classifier:} Demonstrated a training accuracy of 53.57\% and a test accuracy of 49.79\%. The model showed high recall for the \textit{“negative”} sentiment (0.96) but suffered from low precision and F1-scores for the other classes, indicating difficulties in generalization to unseen data.
+    
+    \item \textbf{Naive Bayes Classifier:} Outperformed the previous models with a test accuracy of 62.06\%. The model exhibited balanced precision, recall, and F1-scores across all sentiment classes, demonstrating its suitability for text data processed with TF-IDF vectorization.
+    
+    \item \textbf{RoBERTa:} Delivered superior performance with a test accuracy of 74\%. The model achieved uniformly high precision (0.77–0.81), recall (0.73–0.83), and F1-scores (0.74–0.82) across all sentiment classes. These results highlight RoBERTa’s ability to understand contextual and semantic relationships, significantly outperforming traditional approaches. 
+    
+    RoBERTa was chosen for its advanced natural language processing capabilities, which address key challenges inherent in sentiment analysis tasks. Unlike traditional methods such as TF-IDF, which rely on isolated word frequencies, RoBERTa excels in capturing the contextual meaning of words within their surrounding text, enabling a deeper understanding of language nuances. Its ability to identify complex sentiments, such as sarcasm, mixed emotions, and implicit meanings, makes it particularly effective for analyzing the short and noisy text often found in tweets. Furthermore, RoBERTa leverages the power of transfer learning by utilizing pretrained representations on large text corpora. This allows it to generalize effectively even with limited labeled data, making it a robust and reliable choice for sentiment analysis in real-world scenarios.
+\end{itemize}
+
+More on this in Section 6.1.
+
+\section{\textbf{Data Analytics and Intelligent System}}
+\subsection{\textbf{System Requirements Analysis}}
+\begin{itemize}
+    \item \textbf{Data Layer:} Collects raw data (tweets).
+    \item \textbf{Processing Layer:} Preprocesses data, trains machine learning models, and evaluates their performance.
+    \item \textbf{Presentation Layer:} Displays results through a user-friendly classification report and confusion matrix.
+\end{itemize}
+\subsection{\textbf{System Design}}
+\textbf{System Architecture:}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 025740.png}
+\caption{Process Flow }
+\end{figure}
+The system is designed to perform sentiment classification of tweets and provide actionable insights. The scope includes data ingestion, preprocessing, sentiment analysis, visualization, and result presentation.
+
+\subsection*{System Boundary (In-Scope)}
+\begin{itemize}
+    \item \textbf{Kaggle:} Used as the source for acquiring raw data.
+    \item \textbf{Google Drive:} Acts as the primary storage platform for raw data, cleaned data, and all the model and intermediate files.
+    \item \textbf{Google Colab/Jupyter Notebook:} Used for exploratory data analysis (EDA) to understand the data structure, trends, distribution of the data, and to conduct preprocessing.
+    \item \textbf{Feedback Loop:} Iterative refinement ensures the data preprocessing and feature engineering steps are optimized based on EDA results.
+    \item \textbf{Google Colab:} Notebooks are further utilized for model training and evaluation purposes. The trained model is saved in Google Drive for future use.
+    \item \textbf{Gradio - Interactive Dashboard:} Provides an intuitive and user-friendly interface for end-users to interact with the trained sentiment analysis model, where users can input new tweets and receive sentiment predictions (\textit{positive}, \textit{neutral}, \textit{negative}) in real-time.
+\end{itemize}
+
+\subsection*{Actors}
+\begin{itemize}
+    \item \textbf{Data Analytics Students:} Responsible for dataset preparation, preprocessing, model training, and dashboard creation.
+    \item \textbf{End-Users:} Social media analysts, marketers, and researchers who interact with the Gradio dashboard for real-time sentiment prediction.
+\end{itemize}
+
+\subsection*{Use Cases}
+\begin{itemize}
+    \item \textbf{Tweets Sentiment Classification:} Provides sentiment predictions to help understand public sentiment on social media.
+    \item \textbf{Performance Insights:} Offers detailed performance metrics such as accuracy, precision, recall, and F1-score for reliability and transparency.
+    \item \textbf{Real-Time Predictions:} Enables end-users to input tweets via the Gradio dashboard and receive sentiment predictions instantly.
+    \item \textbf{Data Preparation:} Performs data cleaning and preprocessing to ensure high-quality input for machine learning models.
+\end{itemize}
+
+
+\subsection{\textbf{Intelligent Solution}}
+\textbf{Targeted Problem} - The primary problem addressed in this project is sentiment analysis of Twitter data, where tweets are classified into positive, neutral, or negative categories. This task is crucial for identifying and flagging harmful or hateful content while aiding businesses in brand reputation management, customer feedback analysis, and public opinion monitoring.
+
+\subsubsection*{\textbf{5.3.1 Input Dataset}}
+The dataset comprised approximately 27,000 tweets, each with the following attributes:
+\begin{itemize}
+    \item \textbf{textID:} A unique identifier for each tweet.
+    \item \textbf{text:} The content of the tweet.
+    \item \textbf{sentiment:} The sentiment label for the tweet (\textit{positive}, \textit{neutral}, or \textit{negative}).
+    \item \textbf{selected\_text:} The specific part of the text associated with the sentiment label.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 151133.png}
+\caption{Load dataset }
+\end{figure}
+\subsubsection*{\textbf{5.3.2 Data Cleaning}}
+As part of data cleaning, we focused on identifying and resolving potential issues such as missing values and duplicate entries to ensure the dataset was well-prepared for analysis and model training.
+
+\textbf{Handling Missing Values} We systematically checked for missing values in each column (\texttt{textID}, \texttt{text}, \texttt{sentiment}, and \texttt{selected\_text}) using pandas functions like \texttt{isnull().sum()}. This allowed us to verify the completeness of the data. Upon examination, no missing values were found, indicating that the dataset was complete and did not require imputation or removal of rows for this aspect.
+
+\textbf{Addressing Duplicates} to prevent biases in model training, we investigated duplicate entries in the dataset. Using the pandas duplicated() function, we identified duplicate rows by comparing the textID and text columns. A small number of duplicate entries were detected. These duplicates were removed to ensure the integrity of the dataset and maintain its quality.
+
+\subsubsection*{\textbf{5.3.3 Exploratory Data Analysis (EDA)}}
+EDA provided critical insights into the structure, content, and challenges of the dataset. It informed preprocessing decisions and guided model selection, ensuring that the data was prepared effectively for training and evaluation. The findings highlighted the importance of addressing noise in text data and leveraging frequent terms as key features for sentiment classification.
+
+\paragraph{\textbf{Initial Data Insights:}}
+The class distribution in the dataset showed neutral sentiments as the largest class (40.45\%), with positive and negative sentiments fairly close (31.23\% and 28.32\%). Although the imbalance is not severe, it should be considered during model development. To address this, we utilized stratified sampling to ensure balanced representation during training and added class weights to manage the imbalance effectively, ensuring the model performs well across all sentiment categories.
+
+\paragraph{\textbf{Tweet Length Analysis:}}
+To understand the complexity of the text data, we conducted a tweet length analysis by examining the number of characters in each tweet. This analysis involved calculating the character count for each tweet and visualizing the distribution using histograms and Kernel Density Estimate (KDE) plots. The findings revealed that most tweets ranged between 20 to 80 characters, with negative tweets tending to be slightly longer on average. This variation in tweet lengths highlighted the importance of ensuring that the models used are capable of effectively handling both shorter and moderately longer texts, as the length of a tweet may influence its sentiment classification.
+
+\paragraph{\textbf{Text Data Visualization:}}
+\textbf{Word Clouds:} To gain insights into the language patterns associated with each sentiment class, we utilized word clouds as a visualization technique. Tweets were first separated into three subsets based on their sentiment labels—positive, negative, and neutral. The text data was then preprocessed by removing stop words and punctuation to ensure that the most meaningful words were highlighted. Using the WordCloud library, word clouds were generated for each sentiment class, showcasing the most frequently used words.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/0.png}
+\includegraphics[width=0.48\textwidth]{SS/1.png}
+\includegraphics[width=0.48\textwidth]{SS/2.png}
+\caption{Word Cloud  }
+\end{figure}
+
+\subsubsection*{\textbf{Findings}}
+
+\textbf{Positive Sentiments:} Common words included \textit{"thank," "love," "good," "great," "happy," "like," "day," "thanks," "work,"} and \textit{"today,"} reflecting expressions of gratitude and positivity.
+
+\textbf{Negative Sentiments:} Words such as \textit{"not," "miss," "no," "can't," "hate," "sorry," "night," "work," "bad,"} and \textit{"feel"} were predominant, indicating dissatisfaction or negative emotions.
+
+\textbf{Neutral Sentiments:} Frequent words like \textit{"go," "day," "got," "know," "time," "going," "see," "back," "today,"} and \textit{"think"} were observed, representing a more factual or ambiguous tone.
+
+These findings provide valuable insights into the vocabulary associated with different sentiments, which can inform feature extraction and model development by highlighting sentiment-specific language patterns.
+
+
+\textbf{Distribution of Tweet Length}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 153053.png}
+\caption{Distribution of tweet length }
+\end{figure}
+
+\textbf{Findings : }
+Tweets in this dataset are relatively short, as expected for Twitter's character limit (historically 140 and later increased to 280). The variation in tweet lengths highlights the need for models to effectively handle text data of differing lengths. Tweets with more characters might convey more detailed sentiments, potentially making them easier to classify, while shorter tweets could pose challenges due to limited context. This distribution emphasizes the importance of preprocessing and feature extraction to handle the variability in tweet lengths effectively.
+
+
+\textbf{N-gram Analysis :} N-gram analysis aimed to capture context beyond individual words by generating and analyzing the frequency of bi-grams and trigrams. Positive bi-grams like "thank you" and "good morning" reflected positivity, while negative bi-grams like "don't know" and "can't wait" indicated dissatisfaction. This approach effectively captured contextual relationships, enhancing the model's ability to interpret sentiment nuances.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/4.png}
+\caption{N-gram analysis }
+\end{figure}
+
+These bigrams provided us with deeper insights into the relationships between words, offering features that go beyond individual tokens. By integrating these sentiment-specific bigrams into our model, we aim to improve its ability to capture subtle sentiment nuances and deliver more accurate predictions.	
+
+\subsubsection*{\textbf{5.3.4 Data Preprocessing}}
+To prepare the text data for analysis, several preprocessing steps were applied to ensure consistency, reduce noise, and enhance the quality of the input for modeling:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/5.png}
+\caption{Data preprocessing}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Lowercasing:} All text was converted to lowercase to maintain uniformity and avoid case-sensitive mismatches.
+    
+    \item \textbf{Punctuation and Special Characters Removal:} Punctuation marks and special characters were removed using regular expressions to clean the text of unnecessary symbols.
+    
+    \item \textbf{URLs and HTML Tags Removal:} Any URLs and HTML tags present in the tweets were identified and removed to focus solely on the textual content.
+    
+    \item \textbf{Contractions Handling:} Common contractions (e.g., \textit{"can't"} to \textit{"cannot"}) were expanded using the \texttt{contractions} library, ensuring standardized text for better comprehension.
+    
+    \item \textbf{Tokenization:} The text was split into individual words (tokens) for detailed analysis. This was achieved using NLTK's \texttt{word\_tokenize} function, which effectively isolated words in the text.
+    
+    \item \textbf{Stopword Removal:} Commonly used words that do not contribute specific meaning to the text were eliminated. This was accomplished using NLTK's predefined English stopword list, which was further extended with tweet-specific irrelevant terms like \textit{"rt"} (retweet).
+    
+    \item \textbf{Lemmatization:} Words were reduced to their base or dictionary form to unify variations of the same word and ensure consistency. This was achieved using NLTK's \texttt{WordNetLemmatizer}, which transformed words like \textit{"running"} and \textit{"runs"} into their root form, \textit{"run"}.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 153735.png}
+\caption{Raw vs cleaned text}
+\end{figure}
+
+\subsubsection*{\textbf{5.3.5 Developed Machine Learning Models}}
+
+The dataset, \texttt{Tweets\_Cleaned.csv}, is loaded into a Pandas DataFrame. The \texttt{sentiment} column, containing labels like \textit{"positive," "neutral,"} and \textit{"negative,"} is encoded into numerical values using \texttt{LabelEncoder}. Missing values in the \texttt{text} column are handled by replacing them with empty strings.
+
+\textbf{Feature Extraction Using TF-IDF:}
+The textual data is transformed into numerical features using TF-IDF (Term Frequency-Inverse Document Frequency). This method quantifies the importance of words in a document relative to the entire dataset, resulting in a sparse matrix representation of the text.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/6.png}
+\caption{Feature extraction}
+\end{figure}
+\textbf{Splitting Data into Train and Test Sets:}
+The dataset is divided into training and testing sets using \texttt{train\_test\_split}. This ensures that the model is trained on one part of the data and evaluated on another to assess its generalization ability.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/7.png}
+\caption{Splitting data}
+\end{figure}
+\textbf{Hyperparameter Tuning:}
+Hyperparameter tuning is performed to optimize model parameters and improve performance.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/8.png}
+\caption{Hyperparameter Tuning}
+\end{figure}
+\subsubsection*{\textbf{5.3.6 Machine Learning Models}}
+
+\textbf{Decision Tree Classifier:}
+The Decision Tree Classifier served as the baseline model for the project. It is known for its interpretability and ability to model non-linear relationships. However, the model struggled with low accuracy and faced significant challenges in effectively classifying neutral sentiments.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/9.png}
+\caption{Decision tree}
+\end{figure}
+\textbf{Random Forest Classifier:}
+The Random Forest Classifier is an ensemble technique combining predictions from multiple decision trees and was used as the primary model for this project. Hyperparameter tuning was performed using \texttt{GridSearchCV} to identify the best configuration for parameters such as the number of trees, maximum depth, and minimum samples per split. It achieved high precision for positive sentiments but struggled with accurately classifying neutral sentiments.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/10.png}
+\caption{Random forest}
+\end{figure}
+\textbf{Hyperparameter Tuning Using GridSearchCV:}
+The Random Forest Classifier was optimized using \texttt{GridSearchCV}, which searched for the best combination of hyperparameters. The tuned hyperparameters included:
+\begin{itemize}
+    \item \textbf{n\_estimators:} Number of decision trees in the forest.
+    \item \textbf{max\_depth:} Maximum depth of each tree.
+    \item \textbf{min\_samples\_split:} Minimum samples required to split a node.
+    \item \textbf{min\_samples\_leaf:} Minimum samples required in a leaf node.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/11.png}
+\caption{Hyperparameter Tuning using GridSearchCV}
+\end{figure}
+\textbf{Naive Bayes Classifier:}
+The Naive Bayes Classifier provided a computationally efficient baseline with improved recall and accuracy compared to Random Forest. However, Naive Bayes has inherent limitations. It assumes feature independence, which, while computationally efficient, prevents the model from capturing contextual relationships between words. As a result, its ability to understand nuanced language patterns, such as sarcasm or subtle shifts in sentiment, was restricted.
+
+A \texttt{ColumnTransformer} was used to process text features with a TF-IDF Vectorizer and scale numeric features using \texttt{MinMaxScaler}, ensuring both text and numerical inputs were properly prepared for the model. The pipeline combined these preprocessing steps with the Multinomial Naive Bayes (\texttt{MultinomialNB}) model, which is well-suited for text classification tasks involving word frequencies. The pipeline ensured that preprocessing and model training were executed sequentially, with \texttt{MultinomialNB} as the final step for classification.
+
+\textbf{Hyperparameters Tuned Using GridSearchCV:}
+Hyperparameters for both the TF-IDF Vectorizer and Naive Bayes model were fine-tuned using \texttt{GridSearchCV}, which evaluated various combinations of parameters to find the best settings. The parameters included:
+\begin{itemize}
+    \item \textbf{TF-IDF max\_features:} The maximum number of features to consider.
+    \item \textbf{TF-IDF ngram\_range:} Whether to use unigrams or bigrams.
+    \item \textbf{Naive Bayes alpha:} The smoothing parameter to handle zero probabilities.
+    \item \textbf{Naive Bayes fit\_prior:} Whether to learn class priors or use uniform priors.
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/12.png}
+\caption{Naive bayes}
+\end{figure}
+
+\textbf{RoBERTa (Robustly Optimized BERT Pretraining Approach)}
+
+RoBERTa (Robustly Optimized BERT Pretraining Approach) is a natural language processing (NLP) model developed by Facebook AI as an improvement over the BERT (Bidirectional Encoder Representations from Transformers) architecture. It retains the core structure of BERT while addressing some limitations through enhanced pretraining strategies and optimizations.
+
+RoBERTa is ideal for sentiment analysis because of its strong architecture, which uses an attention mechanism to effectively process and interpret text. In this project, the model is fine-tuned to categorize text into three sentiment types: \textit{neutral}, \textit{positive}, and \textit{negative}.
+
+Our project focuses on leveraging the power of transformer-based models (RoBERTa) to classify text data from tweets for sentiment analysis. Specifically, it categorizes tweets as \textit{neutral}, \textit{positive}, or \textit{negative}. The following sections outline a systematic approach to data preprocessing, model training, and evaluation, highlighting the robustness of RoBERTa in natural language understanding tasks.
+
+\textbf{Fine-Tuning RoBERTa:}
+We fine-tuned RoBERTa with weights for the text classification task to train our model for achieving higher accuracy. The \texttt{sentiment} column was renamed to \texttt{label} for consistency, and the sentiment labels were mapped to numerical values. Specifically:
+\begin{itemize}
+    \item \textbf{Neutral:} 0
+    \item \textbf{Positive:} 1
+    \item \textbf{Negative:} 2
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/14.png}
+\caption{Rename column}
+\end{figure}
+\textbf{Tokenization:}
+Tokenization was implemented using RoBERTa’s tokenizer to convert tweets into a format that the model could understand. The tokenizer broke each tweet into smaller pieces, called tokens, and converted these tokens into numerical representations. Additionally, attention masks were created during this process. These masks helped the model focus on the actual content of the tweet while ignoring any padding added to ensure all tweets were of uniform length.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/15.png}
+\caption{Tokenize the data }
+\end{figure}
+\textbf{Model Architecture:}
+We used a pretrained RoBERTa model and added a classification layer on top of it. The pretrained model was responsible for understanding the context and meaning of the tweets, while the added classification layer was tasked with predicting the sentiment label. The pretrained model's knowledge from training on a large corpus was crucial in accurately analyzing the sentiments in the tweets.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 160524.png}
+.
+ 
+\includegraphics[width=0.48\textwidth]{Screenshot 2024-12-10 160631.png}
+\caption{RoBERTa }
+\end{figure}
+After fine tuning, the model is evaluated on a test set consisting of new tweets. We measured its performance using metrics such as accuracy and F1-score, which provided insights into how well the model could predict the sentiment of unseen tweets. The results demonstrated the effectiveness of fine-tuning RoBERTa for this task. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/16.png}
+\caption{evaluation loop }
+\end{figure}
+\textbf{Hyperparameter Tuning and Training Strategy}
+To enhance the model's performance, hyperparameters were carefully chosen and adjusted. Training was done over 10 epochs with a learning rate of \(5 \times 10^{-5}\) and a batch size of 128. Weight decay (0.01) and warmup steps (500) were used to enhance stability and prevent overfitting. To avoid overfitting, weight decay of 0.01 was applied, which helps the model generalize better by discouraging excessively large weights. 
+
+The evaluation strategy was designed to check the model's performance after each epoch, saving the best model based on accuracy, the chosen metric for monitoring. Logging was set up to track training progress every 10 steps, providing insights into the model's learning process.
+
+The choices of hyperparameters and training methods were designed to improve the model's learning, ensuring it achieves high accuracy, stability, and the ability to generalize well to new data. These settings were tested repeatedly to find a good balance between performance and efficiency, leading to a well-tuned RoBERTa model that accurately classifies sentiment.
+
+\subsection*{\textbf{5.4 System Supporting Environment}}
+The project leverages a range of technologies to ensure efficient and scalable sentiment analysis. Python serves as the core programming language, supported by libraries such as NLTK and Scikit-learn for text processing and traditional machine learning, as well as PyTorch and Hugging Face Transformers for advanced deep learning models. The user interface is built using Gradio, enabling real-time sentiment prediction. For data visualization, tools like Matplotlib and Plotly are employed to create clear and insightful graphs and charts, while Pandas is used for data management and preprocessing. 
+
+Development and experimentation are facilitated by versatile environments, Jupyter Notebook and Google Colab, ensuring a seamless workflow from model development to deployment.
+
+\paragraph{\textbf{Gradio Snippet:}}
+A Gradio snippet is used to provide an interactive and user-friendly interface for real-time sentiment prediction.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/17.png}
+\caption{Gradio implementation }
+\end{figure}
+
+\section{\textbf{System Evaluation and Visualization}}
+
+\subsection{\textbf{Analysis of Model Execution and Evaluation Results}}
+The following analysis metrics were used to evaluate the performance of the models:
+
+\begin{itemize}
+    \item \textbf{Accuracy:} \( \frac{\text{Correct Predictions}}{\text{Total Predictions}} \)
+    \begin{itemize}
+        \item \textbf{Explanation:} Measures the proportion of correct predictions out of total predictions. Simple but may not be reliable for imbalanced datasets.
+        \item \textbf{Impact on Model:} High accuracy indicates good overall performance but may fail on imbalanced data.
+    \end{itemize}
+    
+    \item \textbf{Precision:} \( \frac{\text{TP}}{\text{TP + FP}} \)
+    \begin{itemize}
+        \item \textbf{Explanation:} Focuses on the positive predictions and calculates how many of them were actually correct. Useful when false positives are costly.
+        \item \textbf{Impact on Model:} High precision means fewer false alarms, which is crucial when false positives are costly.
+    \end{itemize}
+    
+    \item \textbf{Recall:} \( \frac{\text{TP}}{\text{TP + FN}} \)
+    \begin{itemize}
+        \item \textbf{Explanation:} Measures the ability of the model to identify all relevant instances. Critical when false negatives are costly.
+        \item \textbf{Impact on Model:} High recall ensures most positives are identified, reducing false negatives.
+    \end{itemize}
+    
+    \item \textbf{F1-Score:} \( 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision + Recall}} \)
+    \begin{itemize}
+        \item \textbf{Explanation:} The harmonic mean of precision and recall, balancing the trade-off between them. Useful for imbalanced datasets.
+        \item \textbf{Impact on Model:} High F1-score indicates a balance between precision and recall, important for imbalanced data.
+    \end{itemize}
+    
+    \item \textbf{Support:} Number of actual instances in the dataset.
+    \begin{itemize}
+        \item \textbf{Explanation:} Indicates the count of actual instances for each class. High support makes metric values more reliable.
+        \item \textbf{Impact on Model:} Provides the basis for calculating other metrics. High support ensures reliability.
+    \end{itemize}
+\end{itemize}
+
+
+\textbf{Model Performance Summary}
+Accuracy, precision, recall, and F1-score were used to assess model performance, along with a confusion matrix for a detailed analysis:
+\begin{itemize}
+    \item \textbf{Accuracy:} The ratio of correctly identified samples to the total samples was highest with the RoBERTa model, showcasing its superior performance.
+    \item \textbf{Precision:} Both the Random Forest and RoBERTa models excelled in precision for the positive sentiment class, highlighting their strength in making specific, accurate predictions.
+    \item \textbf{Recall:} Naive Bayes achieved the highest recall, effectively identifying relevant instances across all sentiment classes.
+    \item \textbf{F1-Score:} RoBERTa showed strong and consistent F1-scores, particularly in detecting positive sentiments, balancing precision and recall.
+\end{itemize}
+
+Additionally, the confusion matrix provided an in-depth visualization of each model's strengths and weaknesses by displaying true positives (TP), true negatives (TN), false positives (FP), and false negatives (FN) for each sentiment category.
+\subsection{\textbf{Achievements and Constraints}}
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|p{1cm}|p{2cm}|p{2cm}|p{2cm}|}
+\hline
+\textbf{Model} & \textbf{Key Insights} & \textbf{Strengths} & \textbf{Constraints} \\ \hline
+\textbf{RoBERTa} & Achieved very good performance with well-balanced precision, recall, and F1-score. Validation F1: 0.742, accuracy: 74.3\%. & Best accuracy: 74\% (test). Balanced metrics: Precision, Recall, F1 ~ 0.74 for all classes. & High computational requirements (~3 hours for training). Requires GPU for efficient training. \\ \hline
+\textbf{Naive Bayes} & Processed large text datasets effectively and served as a reliable baseline for comparison. Good recall for neutral (80\%). & Good accuracy: 63\% (test). Computationally efficient. & Precision for negative is moderate (72\%), F1 for all classes inconsistent (~0.62). \\ \hline
+\textbf{Random Forest} & Enhanced precision for positive and neutral sentiments. High recall for neutral (87\%). & Moderate accuracy: 63\% (test). Suitable for identifying specific patterns. & Precision for negative is moderate (80\%), precision for neutral is low (54\%). Overall F1-score is moderate (~0.61), with low performance for "negative" and "neutral" precision. \\ \hline
+\textbf{Decision Tree} & Provided interpretable insights but achieved lower accuracy compared to other models. Decent recall for neutral (89\%). & Moderate accuracy: 58\% (test). & Significant overfitting (Train: ~64.8\%, Test: ~58.2\%). Struggles with precision for negative (76\%) and low macro F1 (~0.54). \\ \hline
+\end{tabular}
+\caption{Model Insights, Strengths, and Constraints}
+\end{table}
+
+The project successfully implemented and evaluated multiple machine learning models, each contributing valuable insights into tweet sentiment analysis. RoBERTa achieved very good performance with a well-balanced precision, recall, and F1-score, making it the standout model. Naive Bayes, known for its computational efficiency, processed large text datasets effectively, serving as a reliable baseline for comparison. Random Forest added value by enhancing precision for specific sentiment categories, offering better interpretability in these cases. However, the project faced some constraints. RoBERTa's advanced capabilities came at the cost of high computational requirements, taking approximately three hours to execute. Additionally, models like Random Forest and Naive Bayes encountered challenges in achieving a consistent balance between precision and recall, reflecting the inherent trade-offs in their design.
+
+Notwithstanding these difficulties, a thorough grasp of sentiment analysis in a variety of contexts was made possible by the combination of transformer-based and conventional models. The ability of the Random Forest and Decision Tree classifiers to determine the significance of features provided insightful information for feature engineering. The experiment also demonstrated how crucial hyperparameter adjustment and data pretreatment are to maximizing model performance. These results highlight how hybrid techniques may be used to balance accuracy, interpretability, and efficiency in sentiment classification tasks.
+
+\subsection{\textbf{System Quality Evaluation of Model Functions and Performance}}
+The models showcased high levels of correctness in classifying positive sentiments, with RoBERTa standing out for its accuracy. In terms of runtime performance, Naive Bayes proved to be the fastest, thanks to its straightforward probabilistic framework. On the other hand, RoBERTa required significantly more time for training and inference due to its transformer-based architecture, but this investment was justified by its superior predictive accuracy. Random Forest struck a balance between runtime efficiency and precision, making it a practical choice for scenarios with moderate computational resource constraints while still delivering reliable performance.
+
+The confusion matrix further enriched the analysis by breaking down true positives, false positives, false negatives, and true negatives for each class. This visualization helped derive precision, recall, and F1-score for sentiments (positive, negative, and neutral), offering granular insights into model performance.
+
+
+\subsubsection*{\textbf{Decision Tree Performance}}
+The Decision Tree model shows strong performance in identifying neutral tweets, achieving high recall (0.89) and the highest number of correct predictions. However, it struggles significantly with the negative class, with most tweets misclassified as neutral, resulting in low recall (0.23). Overall, the model demonstrates moderate performance, with an accuracy of 58\%, but requires improvements to handle class distinctions effectively.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/19.png}
+\caption{Decision tree report}
+\end{figure}
+The Decision Tree model performs best for the neutral class, achieving high recall (0.89) and an F1-score of 0.65, effectively identifying most neutral tweets despite moderate precision (0.51). For the positive class, it shows balanced performance with high precision (0.78) and moderate recall (0.50), resulting in an F1-score of 0.61. However, the model struggles with the negative class, achieving low recall (0.23) and an F1-score of 0.35, indicating difficulty in identifying negative tweets. Overall, the model achieves an accuracy of 58\%, with its strongest performance in the neutral class.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/20.png}
+\caption{Confusion Matrix - Decision tree }
+\end{figure}
+The confusion matrix shows that the Decision Tree model struggles to distinguish between neutral and other sentiment classes. While the neutral class has the highest correct predictions (1991), many tweets from the negative (1135) and positive (808) classes are misclassified as neutral. The negative class performs poorly, with only 360 correctly classified tweets, and the positive class sees 846 correct predictions but significant misclassifications. These results highlight the model's bias toward predicting neutral sentiments, indicating the need for better feature representation and model tuning to improve classification accuracy.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/21.png}
+\caption{Decision tree }
+\end{figure}
+The Decision Tree visualization illustrates how the model splits data based on specific features, such as words like "love," "good," "happy," and "miss," to classify tweets into sentiment categories (negative, neutral, positive). Each node contains information about Gini impurity, sample size, class distribution, and the majority class at that point, showing the decision-making process. The tree heavily relies on features like "love" and "good" for initial splits, with the majority of classifications leaning toward the neutral class, reflecting its dominance in the dataset. While the visualization highlights the interpretability of the model and the importance of key features, it also reveals limitations, such as overfitting and a bias toward the neutral class. Addressing these issues through enhanced feature representation or ensemble methods could improve overall model performance.
+\subsubsection*{\textbf{Random Forest Performance}}
+The Random Forest model shows reliable performance in identifying neutral and positive tweets but faces challenges in accurately capturing negative sentiments. Enhancing recall for the negative class and improving balance across all classes could significantly improve the model's performance. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/22.png}
+\caption{Random forest report}
+\end{figure}
+The classification report highlights the performance of the Random Forest model for each sentiment class. The negative class achieves high precision (0.80) and low recall (0.33), resulting in an F1-score of 0.47. The neutral class demonstrates high recall (0.87) and moderate precision (0.54), leading to an F1-score of 0.67. For the positive class, the model achieves balanced precision (0.79) and recall (0.58), resulting in an F1-score of 0.67. Overall, the model achieves an accuracy of 63\%, showing reliable performance across the sentiment classes.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/23.png}
+\caption{Visualization 1- Random forest}
+\end{figure}
+The bar chart visually compares precision, recall, and F1-score for each sentiment class. The negative class achieves high precision (0.80) but low recall (0.33), resulting in an F1-score of 0.47. The neutral class demonstrates the highest recall (0.87) and moderate precision (0.54), leading to an F1-score of 0.67. The positive class achieves balanced precision (0.79) and recall (0.58), resulting in an F1-score of 0.67. The chart highlights the varying levels of precision, recall, and F1-scores across the sentiment classes.
+
+
+\textbf{Precision-Recall Trade-off}
+For the neutral class, precision is low (0.54) despite high recall (0.87). This suggests that the model over-predicts neutral tweets, resulting in more false positives.
+
+The negative class exhibits the opposite behavior, with high precision (0.80) but very low recall (0.33). This indicates that the model only predicts negative tweets when it is very confident, leading to missed negative instances.
+
+For the positive class, the balance between precision (0.79) and recall (0.58) is better than the other two classes, but there is still room for improvement in recall.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/24.png}
+\caption{Visualization 2- Random forest}
+\end{figure}
+
+The line chart provides a comparative view of precision, recall, and F1-score across sentiment classes. The negative class achieves high precision (0.80) but low recall (0.33), indicating that while the model predicts negative tweets accurately, it misses many actual negative cases. The neutral class has the highest recall (0.87), showing the model’s effectiveness in identifying neutral tweets, though precision is moderate at 0.54. The positive class demonstrates balanced performance with precision (0.79) and recall (0.58), leading to consistent F1-scores. Overall, the chart shows that the model performs strongly in precision for negative and positive tweets but achieves the highest recall for neutral tweets.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/25.png}
+\caption{Confusion matrix - Random forest}
+\end{figure}
+Neutral tweets are the most accurately predicted, as the majority (1104) were correctly classified. However, a notable number were confused with negative (699) or positive (435) sentiments. Negative tweets are often misclassified as neutral (894), suggesting the model struggles to distinguish between these two sentiments. Positive tweets have the lowest correct classifications (305) and are frequently misclassified as neutral (721), indicating difficulties in differentiating between neutral and positive sentiments.
+
+The Random Forest model demonstrates a strong bias toward predicting the neutral class, as tweets from other categories are frequently misclassified as neutral. While it performs relatively well in identifying neutral tweets, it struggles with distinguishing between negative and positive sentiments, often confusing them with each other or the neutral class. Improving the model's ability to differentiate between sentiments, particularly between negative and neutral, could enhance its performance. This could be achieved through feature engineering, dataset rebalancing, or implementing advanced models like transformer-based architectures.
+
+\subsubsection*{\textbf{Naive Bayes Performance}}
+The Naive Bayes model (Multinomial Naive Bayes ) demonstrates moderate performance with an accuracy of 63\%. It performs best for the neutral class, with high recall (0.80) and an F1-score of 0.65, while the positive class shows balanced performance, achieving high precision (0.76) and an F1-score of 0.65. However, it struggles with the negative class, achieving lower recall (0.44) and an F1-score of 0.54. Overall, the model performs well for neutral and positive classes but requires improvements in recall for the negative class to enhance its effectiveness.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/26.png}
+\caption{Naive Bayes report}
+\end{figure}
+The tuned Multinomial Naive Bayes model shows moderate performance, with an overall accuracy of 63\% and a macro average F1-score of 0.62. The neutral class performs best, achieving high recall (0.80) and an F1-score of 0.65, while the positive class demonstrates balanced performance with precision (0.76) and recall (0.57), resulting in an F1-score of 0.65. However, the negative class struggles with lower recall (0.44), leading to an F1-score of 0.54. The model performs better on neutral and positive classes compared to the negative class.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/27.png}
+\caption{Naive Bayes - Confusion matrix}
+\end{figure}
+
+The confusion matrix for the Multinomial Naive Bayes model shows that the neutral class performs best, with 1797 correctly classified tweets, though some are misclassified as negative or positive. The positive class also performs reasonably, with 969 correct predictions, though 669 are misclassified as neutral. The negative class struggles, with 684 correct predictions and 800 misclassified as neutral, highlighting difficulty in distinguishing negative tweets from neutral ones. Overall, the model handles neutral and positive classes better than the negative class.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/28.png}
+\caption{Visualization 1 - Naive Bayes}
+\end{figure}
+The bar chart shows the precision, recall, and F1-score for each sentiment class using the Multinomial Naive Bayes model. The neutral class performs the best, with the highest recall (0.80) and a strong F1-score (0.65), though precision is moderate (0.55). For the positive class, precision is high (0.76), and recall is moderate (0.57), resulting in a balanced F1-score (0.65). The negative class achieves high precision (0.72) but low recall (0.44), leading to a lower F1-score (0.54). Overall, the model performs best for the neutral and positive classes, while struggling with recall for the negative class.
+
+
+\subsubsection*{\textbf{RoBERTa Performance}}
+The RoBERTa model demonstrates excellent performance in sentiment classification, achieving high precision, recall, and F1-scores across all sentiment classes. It excels in identifying neutral and positive sentiments, with strong recall for the neutral class and balanced metrics for the positive class. The negative class, while performing reasonably well, shows some overlap with neutral predictions, indicating a slight area for improvement. The validation accuracy stabilizes at ~74\%, reflecting the model's ability to generalize effectively without overfitting or underfitting. Overall, RoBERTa's robust architecture and contextual understanding enable it to outperform traditional models, making it highly effective for this sentiment analysis task.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/29.png}
+\caption{Confusion matrix - RoBERTa}
+\end{figure}
+The confusion matrix for the RoBERTa model demonstrates strong performance across sentiment classes. The neutral class has the highest correct classifications (1596), with some tweets (312) misclassified as positive and others (328) as negative. The positive class also performs well, with 1342 correctly classified tweets, though some overlap occurs with 283 misclassified as neutral and 63 as negative. The negative class shows 1145 correct predictions, with 323 misclassified as neutral and 104 as positive. Overall, the model effectively identifies neutral and positive tweets, with slight misclassifications primarily between neutral and negative classes.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/30.png}
+\caption{Visualization 1 - RoBERTa}
+\end{figure}
+
+The bar chart reveals that the RoBERTa model maintains balanced precision, recall, and F1-scores across all sentiment classes. Metrics for the positive class are slightly higher, reflecting strong identification of positive tweets. The neutral class also shows robust performance, particularly in recall, which supports its high number of correct classifications in the confusion matrix. The overall macro averages for all metrics (~0.7 to 0.8) indicate consistent and reliable predictions across all classes.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/31.png}
+\caption{Visualization 2 - RoBERTa}
+\end{figure}
+The validation accuracy plot shows fluctuations early in training, with accuracy peaking around the third epoch (~74.2\%). It stabilizes by the final epoch, achieving a validation accuracy close to ~74\%. This stability reflects effective learning, with the model avoiding significant overfitting or underfitting.
+
+\textbf{Overall Analysis: }
+RoBERTa consistently delivered the strongest performance across all evaluation metrics, excelling in capturing contextual nuances in sentiment analysis and demonstrating balanced precision, recall, and F1-scores across all classes. In contrast, Random Forest achieved high precision in certain categories, particularly positive sentiments, but struggled with detecting neutral and negative sentiments. Naive Bayes provided a computationally efficient solution with a good balance between recall and accuracy but fell short of RoBERTa’s precision and contextual understanding. Simpler models like Decision Tree and Random Forest faced challenges with misclassifications and class imbalances, while RoBERTa consistently outperformed them, offering reliable and robust results, albeit at a higher computational cost. Addressing minor misclassifications, applying techniques like SMOTE for class balancing, and further fine-tuning hyperparameters could enhance RoBERTa’s performance even further.
+
+
+\subsection{\textbf{Dashboard for Sentiment Prediction: Deployment}}
+The sentiment prediction dashboard was implemented using the Gradio library, providing a user-friendly interface for real-time sentiment analysis. The dashboard utilizes a pre-trained transformer model loaded via the Hugging Face library, specifically a custom model saved in the \texttt{saved\_model} directory. The model predicts sentiment classes (Positive, Neutral, Negative) based on user input, using the \texttt{AutoTokenizer} for text preprocessing and the \texttt{AutoModelForSequenceClassification} for predictions. The input text is tokenized and processed with PyTorch, leveraging GPU acceleration if available for faster computation. 
+
+The predicted sentiment is displayed dynamically on the dashboard with color-coded labels: green for positive, blue for neutral, and red for negative. Gradio’s intuitive interface features a multi-line text box for user input and an HTML output that visually enhances the prediction. The dashboard includes additional customization such as a descriptive title, a user guide, and the disabling of the flagging option to focus solely on the sentiment prediction task. This streamlined approach enables seamless integration of machine learning models into an interactive web-based application.
+
+
+
+\subsection{ System Visualization}
+While simpler models like Naive Bayes and Decision Tree offer computational efficiency, they are outperformed by ensemble-based Random Forest and transformer-based RoBERTa. RoBERTa stands out as the superior choice for sentiment analysis, despite its higher computational cost, due to its ability to generalize and capture contextual nuances effectively.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/32.png}
+\caption{Visualization 1 - Comparision chart}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/33.png}
+\caption{Visualization 2 - Comparision chart}
+\end{figure}
+The comparison of models reveals distinct performance differences in sentiment analysis. RoBERTa emerges as the best-performing model with nearly 75\% accuracy, leveraging its transformer-based architecture to capture contextual nuances and provide robust predictions. Random Forest and Naive Bayes both achieve moderate accuracy, around 60\%, with Random Forest handling non-linear patterns well and Naive Bayes offering computational efficiency but lacking contextual precision. Decision Tree performs the poorest, with accuracy slightly below 60\%, struggling with overfitting and handling complex patterns compared to ensemble and transformer-based models.
+
+\textbf{Key Insight:} RoBERTa delivers the most reliable results, excelling in both accuracy and contextual understanding due to its advanced deep learning architecture. In contrast, Random Forest and Naive Bayes show moderate performance, offering reasonable accuracy but lacking the depth required for nuanced text analysis. Decision Tree struggles the most, with limitations in both interpretability and generalization, making it the least effective model for this task.
+
+Our preprocessing code handles negations, removes HTML tags, URLs, digits, and punctuations, converts text to lowercase, tokenizes the text, removes stopwords, performs lemmatization and finally joins the tokens back into a single string.
+
+\section{\textbf{Conclusion}}
+\subsection{\textbf{Summary}}
+The research investigated various machine learning approaches for tweet sentiment analysis, including Decision Tree, Random Forest, Naive Bayes, and RoBERTa, each offering unique insights. The Decision Tree model provided interpretability but fell short in performance, particularly struggling with certain sentiment classes. Random Forest improved precision for positive sentiments and reduced errors but faced challenges with neutral sentiment detection and overall accuracy. Naive Bayes emerged as a computationally efficient solution, demonstrating better recall and accuracy compared to Random Forest and performing consistently well across all sentiment classes. However, RoBERTa stood out, achieving state-of-the-art results with high levels of accuracy, precision, recall, and F-scores, excelling particularly in positive sentiment classification. This study underscored the substantial benefits of transformer-based models like RoBERTa for sentiment analysis on social media platforms, highlighting their ability to effectively handle the complexities of contextual understanding.
+
+\subsection{\textbf{Benefits and Shortcomings}}
+\textbf{Benefits:}
+\noindent - The models used in the project offered several benefits, each contributing to the sentiment analysis task in unique ways. RoBERTa demonstrated exceptional accuracy and robustness, excelling in understanding diverse linguistic patterns and complex contextual relationships.
+
+\noindent - Naive Bayes stood out for its computational efficiency and strong recall, making it a reliable choice for large-scale text data. Random Forest proved effective in handling specific sentiment categories, particularly positive sentiments, while providing interpretability.
+
+\noindent - Decision Tree, though simple and highly interpretable, helped lay a foundation for understanding sentiment patterns. Together, these models provided valuable insights into sentiment trends on social media, significantly advancing the field of natural language processing.
+\subsection{\textbf{Potential System and Model Applications}}
+The system offers versatile applications across various domains. It can be used for social media sentiment monitoring, enabling organizations to track public opinion on products, events, or policies and adapt their strategies accordingly. In customer feedback analysis, it helps businesses derive valuable insights from product reviews, facilitating service enhancements and better customer experiences. For crisis management, the system aids in understanding public sentiment during emergencies, allowing for more effective and timely response planning. Additionally, it supports market research by analyzing trends and consumer behavior in real-time, providing businesses with a competitive edge in understanding and addressing market dynamics.
+
+\begin{itemize}
+    \item \textbf{Social Media Sentiment Monitoring:} Tracks public opinion on products, events, or policies, helping organizations adapt their strategies.
+    \item \textbf{Customer Feedback Analysis:} Derives insights from product reviews, enabling service enhancements and improved customer experiences.
+    \item \textbf{Crisis Management:} Aids in understanding public sentiment during emergencies for effective and timely response planning.
+    \item \textbf{Market Research:} Analyzes trends and consumer behavior in real-time, providing a competitive edge in understanding and addressing market dynamics.
+\end{itemize}
+
+\subsection{\textbf{Experience and Lessons Learned}}
+Each model brings unique strengths to sentiment analysis, highlighting the need to balance interpretability, computational efficiency, and accuracy. Key lessons learned include the importance of preprocessing to improve text data quality, such as tokenization and stopword removal, and the trade-offs between model simplicity and performance (e.g., Naive Bayes vs. RoBERTa).  Models like RoBERTa stand out for their ability to understand contextual nuances, often outperforming traditional machine learning models in this regard. Achieving optimal performance, however, requires careful fine-tuning and hyperparameter optimization. Ultimately, the choice of model should be guided by the specific needs of the application and the computational resources available, ensuring the solution is both effective and practical.
+
+\subsection{\textbf{Recommendations for Future Work}}
+To enhance the models further, exploring ensemble approaches that combine the strengths of RoBERTa with simpler models like Naive Bayes could lead to faster and more efficient predictions. Additionally, experimenting with domain-specific pretraining can significantly improve accuracy in specialized areas such as healthcare or education. On the data front, incorporating multilingual datasets would broaden the models' applicability, allowing them to perform effectively across diverse linguistic and regional contexts. In terms of applications, the system's potential extends to areas like mental health monitoring, where it can analyze sentiments to provide insights into emotional well-being, and hate speech detection, contributing to safer and more inclusive online environments.
+\subsection{\textbf{Contributions and Impacts on Society}}
+The system has a broad range of potential impacts across cultural, economic, educational, and social domains. Culturally, it fosters a deeper understanding of public opinion on social and cultural events, supporting more inclusive and responsive policymaking. Economically, it empowers businesses to refine their marketing strategies by effectively analyzing customer sentiments, leading to better decision-making and improved customer engagement. In the educational sphere, the project highlights the capabilities of advanced machine learning techniques in addressing real-world challenges, inspiring innovation and learning in the field of natural language processing. Socially, the system aids in tracking public sentiment on critical issues, enabling timely, data-driven interventions that promote positive societal outcomes.
+
+
+\begin{thebibliography}{99}
+    \bibitem{agarwal2011} Agarwal, A., Xie, B., Vovsha, I., Rambow, O., \& Passonneau, R. (2011). \textit{Sentiment Analysis of Twitter Data}.  \url{https://www.cs.columbia.edu/~julia/papers/Agarwaletal11.pdf}
+
+    \bibitem{vaswani2017} Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., \& Polosukhin, I. (2017). \textit{Attention Is All You Need}. \url{https://arxiv.org/pdf/1601.06971}.
+
+    \bibitem{ieee2020} Chirag Kariya, Priti Khodke (2020). \textit{Sentiment Analysis of Twitter Data}.  \url{https://ieeexplore.ieee.org/document/9154143}.
+
+    \bibitem{researchgate2022}Yili Wang, Jiaxuan Guo, Chengsheng Yuan, Baozhu Li
+ (2022). \textit{Sentiment Analysis of Twitter Data}.\url{https://www.researchgate.net/publication/365618365_Sentiment_Analysis_of_Twitter_Data/fulltext/637b777754eb5f547cf040b8/Sentiment-Analysis-of-Twitter-Data.pdf}.
+
+    \bibitem{springer2022} Rao Hamza Ali, Gabriela Pinto, Evelyn Lawrie, Erik J. Linstead \textit{A large-scale sentiment analysis of tweets pertaining to the 2020 US presidential election}. \url{https://journalofbigdata.springeropen.com/articles/10.1186/s40537-022-00633-z}.
+    
+    \bibitem{yang2018} F.-J. Yang, ``An Implementation of Naive Bayes Classifier,'' 2018 International Conference. Available: \url{https://ieeexplore.ieee.org/document/8947658?utm_source=chatgpt.com}
+    
+    \bibitem{geeksforgeeks} ``Decision Tree vs. Naive Bayes Classifier,'' GeeksforGeeks. Available: \url{https://www.geeksforgeeks.org/decision-tree-vs-naive-bayes-classifier/?utm_source=chatgpt.com}
+    
+    \bibitem{pranckevicius2019} T. Pranckevičius and V. Marcinkevičius, ``Comparison of Naïve Bayes, Random Forest, Decision Tree, Support Vector Machines, and Logistic Regression for Text Reviews Classification,'' Vilnius University, Institute of Mathematics and Informatics, Akademijos str. 4, Vilnius, Lithuania. Available: \url{https://pdfs.semanticscholar.org/e853/f8827a2b9c596296de296b482e1175f9713f.pdf}
+    
+    \bibitem{sajid2024} H. Sajid, ``RoBERTa: An Optimized Method for Pretraining Self-Supervised NLP Systems.'' Available: \url{https://zilliz.com/blog/roberta-optimized-method-for-pretraining-self-supervised-nlp-systems}
+    
+    \bibitem{springer2020} ``Effective Use of Naïve Bayes, Decision Tree, and Random Forest Techniques for Analysis of Chronic Kidney Disease,'' International Conference on Information and Communication Technology for Intelligent Systems. Available: \url{https://link.springer.com/chapter/10.1007/978-981-15-7078-0_22?utm_source=chatgpt.com}
+    
+    \bibitem{alam2024} M. Alam, ``Understanding the Random Forest Algorithm – A Comprehensive Guide,'' Data Science Dojo, August 22, 2024. Available: \url{https://datasciencedojo.com/blog/random-forest-algorithm/?utm_source=chatgpt.com}
+    
+    \bibitem{liu2019} Y. Liu, M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov, ``RoBERTa: A Robustly Optimized BERT Pretraining Approach.'' Available: \url{https://arxiv.org/abs/1907.11692}
+\end{thebibliography}
+
+
+\section{Appendices}
+\subsection{\textbf{Appendix A - Use cases and test results}}
+Gradio interface to predict the sentiment of the text given by the user:
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/35.png}
+\caption{Output 1}
+\end{figure}
+The model accurately labeled this text as negative because of the emotional expression "really down," which strongly reflects negative sentiment.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/36.png}
+\caption{Output 2}
+\end{figure}
+This statement is factual and lacks emotional polarity, leading to a neutral sentiment prediction, which aligns well with the input.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.48\textwidth]{SS/37.png}
+\caption{Output 3}
+\end{figure}
+The model correctly identified this input as positive due to the use of enthusiastic and appreciative words like "delicious" and "top-notch," which convey a positive sentiment.
+
+\subsection{\textbf{Appendix B - Data details}}
+\begin{itemize}
+
+ \item Dataset link: \href{https://www.kaggle.com/datasets/yasserh/twitter-tweets-sentiment-dataset}{https://www.kaggle.com/datasets/yasserh/twitter-tweets-sentiment-dataset}
+\end{itemize}
+
+
+
+Training Data: 80\% of the Kaggle Twitter Sentiment dataset.
+Validation Data: 10\% of the dataset was reserved for hyperparameter tuning.
+Test Data: The remaining 10\% of the dataset.
+
+\subsection{\textbf{Appendix C Project Program Source Library, Presentation, and Demonstration}}
+The below links contain all project related files:
+\begin{itemize}
+    \item \textbf{GitHub Repository}: 
+    
+    \url{https://github.com/hamsaram14/Twitter-sentiment-prediction-ML}
+    \item \textbf{Google Drive}: 
+    
+    \url{https://drive.google.com/drive/folders/1FNonF6r_nxxdaNIHsGl2uVpiNejz1-Xq?usp=drive_link}
+\end{itemize}
+\end{document}
+
